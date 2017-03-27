@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D2322C41E89C55800CDF4B2 /* Protector.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1D79F2B51E89C2BE00C6FEB0 /* Protector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */; };
 		CB2831871AC178D70010AD2A /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB4D56BB1AC17731006715E8 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB2831881AC178DB0010AD2A /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB4D56BC1AC17731006715E8 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB4D569F1AC169A3006715E8 /* StateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4D569E1AC169A3006715E8 /* StateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,6 +55,7 @@
 			files = (
 				CB2831881AC178DB0010AD2A /* Quick.framework in CopyFiles */,
 				CB2831871AC178D70010AD2A /* Nimble.framework in CopyFiles */,
+				1D2322C41E89C55800CDF4B2 /* Protector.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Protector.framework; sourceTree = "<group>"; };
 		CB4D56991AC169A3006715E8 /* SwiftyStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB4D569D1AC169A3006715E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB4D569E1AC169A3006715E8 /* StateMachine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateMachine.h; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D79F2B51E89C2BE00C6FEB0 /* Protector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +199,7 @@
 		CB4D56BA1AC17731006715E8 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */,
 				CB4D56BB1AC17731006715E8 /* Nimble.framework */,
 				CB4D56BC1AC17731006715E8 /* Quick.framework */,
 			);
@@ -539,9 +545,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = StateMachine/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.macoscope.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SwiftyStateMachine;
@@ -560,9 +570,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = StateMachine/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.macoscope.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SwiftyStateMachine;

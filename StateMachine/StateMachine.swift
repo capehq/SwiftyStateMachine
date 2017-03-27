@@ -1,3 +1,5 @@
+import Protector
+
 /// A type representing schema that can be reused by `StateMachine`
 /// instances.
 ///
@@ -65,14 +67,26 @@ public struct StateMachineSchema<A, B, C>: StateMachineSchemaType {
 /// the state before the transition, the event causing the transition,
 /// and the state after the transition.
 public final class StateMachine<Schema: StateMachineSchemaType> {
-    /// The current state of the machine.
-    public fileprivate(set) var state: Schema.State
+    /// The current state of the machine.  Note that state transitions are 
+    /// _thread-safe_.  That means that the _state change_ and the _transition_
+    /// are executed with a *write lock*.  Reading the state uses a *read lock*.
+    /// This ensures that code executed in the state change happens _atomically_.
+    private var protectedState: Protector<Schema.State>
+    public var state: Schema.State {
+        return self.protectedState.withReadLock { protected in
+            return protected
+        }
+    }
 
     /// An optional block called after a transition with three arguments:
     /// the state before the transition, the event causing the transition,
     /// and the state after the transition.
     public var didTransitionCallback: ((Schema.State, Schema.Event, Schema.State) -> ())?
 
+    /// An optional block called before a transition with the event about 
+    /// to be handled.
+    public var aboutToHandleEventCallback: ((_ event: Schema.Event) -> ())?
+    
     /// The schema of the state machine.  See `StateMachineSchemaType`
     /// documentation for more information.
     fileprivate let schema: Schema
@@ -82,29 +96,34 @@ public final class StateMachine<Schema: StateMachineSchemaType> {
     fileprivate let subject: () -> Schema.Subject?
 
     fileprivate init(schema: Schema, subject: @escaping () -> Schema.Subject?) {
-        self.state = schema.initialState
+        self.protectedState = Protector(schema.initialState)
         self.schema = schema
         self.subject = subject
     }
-
+    
     /// A method for triggering transitions and changing the state of the
     /// machine.  Transitions are not performed when a weak reference to the subject
     /// becomes `nil`.  If the transition logic of the schema defines a transition
     /// for current state and given event, the state is changed, the optional
     /// transition block is executed, and `didTransitionCallback` is called.
     public func handleEvent(_ event: Schema.Event) {
-        guard let
-            subject = subject(),
-            let (newState, transition) = schema.transitionLogic(state, event)
-        else {
-            return
+        self.protectedState.withWriteLock { (protected: inout Schema.State) in
+            self.aboutToHandleEventCallback?(event)
+            
+            guard let
+                subject = self.subject(),
+                let (newState, transition) = self.schema.transitionLogic(self.state, event)
+                else {
+                    return
+            }
+            
+            let oldState = protected
+            protected = newState
+            
+            transition?(subject)
+            
+            self.didTransitionCallback?(oldState, event, newState)
         }
-
-        let oldState = state
-        state = newState
-
-        transition?(subject)
-        didTransitionCallback?(oldState, event, newState)
     }
 }
 
