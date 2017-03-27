@@ -1,2 +1,4 @@
 Carthage
 *.xccheckout
+SwiftyStateMachine.xcodeproj/xcuserdata
+SwiftyStateMachine.xcodeproj/project.xcworkspace/xcuserdata
