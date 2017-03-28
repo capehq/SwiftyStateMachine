@@ -34,7 +34,7 @@ extension Operation: DOTLabelable {
 private enum SimpleState { case s1, s2 }
 private enum SimpleEvent { case e }
 
-private func createSimpleSchema<T>(forward: ((T) -> ())? = nil, backward: ((T) -> ())? = nil) -> StateMachineSchema<SimpleState, SimpleEvent, T> {
+private func createSimpleSchema<T>(_ forward: ((T) -> ())? = nil, backward: ((T) -> ())? = nil) -> StateMachineSchema<SimpleState, SimpleEvent, T> {
     return StateMachineSchema(initialState: .s1) { (state, event) in
         switch state {
             case .s1: switch event {
@@ -48,8 +48,8 @@ private func createSimpleSchema<T>(forward: ((T) -> ())? = nil, backward: ((T) -
     }
 }
 
-private func createSimpleMachine(forward: (() -> ())? = nil, backward: (() -> ())? = nil) -> StateMachine<StateMachineSchema<SimpleState, SimpleEvent, Void>> {
-    return StateMachine(schema: createSimpleSchema(forward: { _ in forward?() }, backward: { _ in backward?() }), subject: ())
+private func createSimpleMachine(_ forward: (() -> ())? = nil, backward: (() -> ())? = nil) -> StateMachine<StateMachineSchema<SimpleState, SimpleEvent, Void>> {
+    return StateMachine(schema: createSimpleSchema({ _ in forward?() }, backward: { _ in backward?() }), subject: ())
 }
 
 
@@ -130,7 +130,7 @@ class StateMachineSpec: QuickSpec {
             it("executes transition block on transition") {
                 var didExecuteBlock = false
 
-                let machine = createSimpleMachine(forward: { didExecuteBlock = true })
+                let machine = createSimpleMachine({ didExecuteBlock = true })
                 expect(didExecuteBlock) == false
 
                 machine.handleEvent(.e)
@@ -150,7 +150,7 @@ class StateMachineSpec: QuickSpec {
             }
 
             it("can trigger transition from within transition") {
-                let subject = Subject(schema: createSimpleSchema(forward: {
+                let subject = Subject(schema: createSimpleSchema({
                     $0.machine.handleEvent(.e)
                 }))
 

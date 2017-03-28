@@ -71,7 +71,7 @@ public final class StateMachine<Schema: StateMachineSchemaType> {
     /// _thread-safe_.  That means that the _state change_ and the _transition_
     /// are executed with a *write lock*.  Reading the state uses a *read lock*.
     /// This ensures that code executed in the state change happens _atomically_.
-    private var protectedState: Protector<Schema.State>
+    fileprivate var protectedState: Protector<Schema.State>
     public var state: Schema.State {
         return self.protectedState.withReadLock { protected in
             return protected
