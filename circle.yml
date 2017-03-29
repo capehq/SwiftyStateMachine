@@ -4,5 +4,6 @@ machine:
 
 dependencies:
   pre:
-    - carthage bootstrap --use-ssh
+    - carthage bootstrap
+
 
