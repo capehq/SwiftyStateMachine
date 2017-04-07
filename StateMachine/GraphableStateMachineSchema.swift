@@ -136,6 +136,8 @@ public struct GraphableStateMachineSchema<A: DOTLabelable, B: DOTLabelable, C>: 
 
 
 /// Helper function used when generating DOT digraph strings.
-private func label<T: DOTLabelable>(_ x: T) -> String {
-    return x.DOTLabel.replacingOccurrences(of: "\"", with: "\\\"", options: .literal, range: nil)
+private func label<T: DOTLabelable>(_ labelable: T) -> String {
+    return labelable.DOTLabel
+        .components(separatedBy: "(")[0]
+        .replacingOccurrences(of: "\"", with: "\\\"", options: .literal, range: nil)
 }
