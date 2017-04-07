@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D2322C41E89C55800CDF4B2 /* Protector.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D79F2B51E89C2BE00C6FEB0 /* Protector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */; };
+		1DA916771E98193A00B7E6BF /* MissingLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA916761E98193A00B7E6BF /* MissingLabels.swift */; };
 		1DD273DE1E89E24400D573B3 /* Protector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD273DD1E89E24400D573B3 /* Protector.framework */; };
 		1DD273E01E89E48C00D573B3 /* Protector.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DD273DD1E89E24400D573B3 /* Protector.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB2831871AC178D70010AD2A /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB4D56BB1AC17731006715E8 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -77,6 +78,7 @@
 
 /* Begin PBXFileReference section */
 		1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Protector.framework; sourceTree = "<group>"; };
+		1DA916761E98193A00B7E6BF /* MissingLabels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingLabels.swift; sourceTree = "<group>"; };
 		1DD273DD1E89E24400D573B3 /* Protector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Protector.framework; sourceTree = "<group>"; };
 		CB4D56991AC169A3006715E8 /* SwiftyStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB4D569D1AC169A3006715E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		CB4D56A81AC169A3006715E8 /* StateMachineTests */ = {
 			isa = PBXGroup;
 			children = (
+				1DA916761E98193A00B7E6BF /* MissingLabels.swift */,
 				CB4D56AB1AC169A3006715E8 /* StateMachineSpec.swift */,
 				CB4D56A91AC169A3006715E8 /* Supporting Files */,
 			);
@@ -413,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB4D56AC1AC169A3006715E8 /* StateMachineSpec.swift in Sources */,
+				1DA916771E98193A00B7E6BF /* MissingLabels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

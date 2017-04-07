@@ -35,7 +35,7 @@ private enum SimpleState { case s1, s2 }
 private enum SimpleEvent { case e }
 
 private func createSimpleSchema<T>(_ forward: ((T) -> ())? = nil, backward: ((T) -> ())? = nil) -> StateMachineSchema<SimpleState, SimpleEvent, T> {
-    return StateMachineSchema(initialState: .s1) { (state, event) in
+    return try! StateMachineSchema(initialState: .s1) { (state, event) in
         switch state {
             case .s1: switch event {
                 case .e: return (.s2, { forward?($0) })
@@ -76,7 +76,7 @@ class StateMachineSpec: QuickSpec {
             beforeEach {
                 keeper = NumberKeeper(n: 1)
 
-                let schema: StateMachineSchema<Number, Operation, NumberKeeper> = StateMachineSchema(initialState: .one) { (state, event) in
+                let schema: StateMachineSchema<Number, Operation, NumberKeeper> = try! StateMachineSchema(initialState: .one) { (state, event) in
                     let decrement: (NumberKeeper) -> () = { _ in keeper.n -= 1 }
                     let increment: (NumberKeeper) -> () = { _ in keeper.n += 1 }
 
@@ -164,7 +164,7 @@ class StateMachineSpec: QuickSpec {
 
                     init() {
                         machine = StateMachine(
-                            schema: StateMachineSchema(initialState: .s1) { _ in nil },
+                            schema: try! StateMachineSchema(initialState: .s1) { _ in nil },
                             subject: self)
                     }
                 }
@@ -179,7 +179,7 @@ class StateMachineSpec: QuickSpec {
         describe("Graphable State Machine") {
 
             it("has representation in DOT format") {
-                let schema: GraphableStateMachineSchema<Number, Operation, Void> = GraphableStateMachineSchema(initialState: .one) { (state, event) in
+                let schema: GraphableStateMachineSchema<Number, Operation, Void> = try! GraphableStateMachineSchema(initialState: .one) { (state, event) in
                     switch state {
                         case .one: switch event {
                             case .decrement: return nil
@@ -203,7 +203,7 @@ class StateMachineSpec: QuickSpec {
 
             it("escapes double quotes in labels") {
 
-                let schema = GraphableStateMachineSchema<State, Event, Void>(initialState: .s) { _ in
+                let schema = try! GraphableStateMachineSchema<State, Event, Void>(initialState: .s) { _ in
                     (.s, nil)
                 }
 

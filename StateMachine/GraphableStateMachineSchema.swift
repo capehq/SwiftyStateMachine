@@ -50,10 +50,14 @@ public struct GraphableStateMachineSchema<A: DOTLabelable, B: DOTLabelable, C>: 
     public let transitionLogic: (State, Event) -> (State, ((Subject) -> ())?)?
     public let DOTDigraph: String
 
-    public init(initialState: State, transitionLogic: @escaping (State, Event) -> (State, ((Subject) -> ())?)?) {
+    public enum DOTLabelableError: Error {
+        case missingLabelForState(state: State)
+    }
+
+    public init(initialState: State, transitionLogic: @escaping (State, Event) -> (State, ((Subject) -> ())?)?) throws {
         self.initialState = initialState
         self.transitionLogic = transitionLogic
-        self.DOTDigraph = GraphableStateMachineSchema.DOTDigraphGivenInitialState(initialState, transitionLogic: transitionLogic)
+        self.DOTDigraph = try GraphableStateMachineSchema.DOTDigraphGivenInitialState(initialState, transitionLogic: transitionLogic)
     }
 
     #if os(OSX)
@@ -92,7 +96,7 @@ public struct GraphableStateMachineSchema<A: DOTLabelable, B: DOTLabelable, C>: 
     }
     #endif
 
-    fileprivate static func DOTDigraphGivenInitialState(_ initialState: State, transitionLogic: (State, Event) -> (State, ((Subject) -> ())?)?) -> String {
+    fileprivate static func DOTDigraphGivenInitialState(_ initialState: State, transitionLogic: (State, Event) -> (State, ((Subject) -> ())?)?) throws -> String {
         let states = State.DOTLabelableItems
         let events = Event.DOTLabelableItems
 
@@ -101,14 +105,17 @@ public struct GraphableStateMachineSchema<A: DOTLabelable, B: DOTLabelable, C>: 
             stateIndexesByLabel[label(state)] = i + 1
         }
 
-        func index(_ state: State) -> Int {
-            return stateIndexesByLabel[label(state)]!
+        func index(_ state: State) throws -> Int {
+            guard let res = stateIndexesByLabel[label(state)] else {
+                throw DOTLabelableError.missingLabelForState(state: state)
+            }
+            return res
         }
-
-        var digraph = "digraph {\n    graph [rankdir=LR]\n\n    0 [label=\"\", shape=plaintext]\n    0 -> \(index(initialState)) [label=\"START\"]\n\n"
+        
+        var digraph = try "digraph {\n    graph [rankdir=LR]\n\n    0 [label=\"\", shape=plaintext]\n    0 -> \(index(initialState)) [label=\"START\"]\n\n"
 
         for state in states {
-            digraph += "    \(index(state)) [label=\"\(label(state))\"]\n"
+            digraph += try "    \(index(state)) [label=\"\(label(state))\"]\n"
         }
 
         digraph += "\n"
@@ -116,7 +123,7 @@ public struct GraphableStateMachineSchema<A: DOTLabelable, B: DOTLabelable, C>: 
         for fromState in states {
             for event in events {
                 if let (toState, _) = transitionLogic(fromState, event) {
-                    digraph += "    \(index(fromState)) -> \(index(toState)) [label=\"\(label(event))\"]\n"
+                    digraph += try "    \(index(fromState)) -> \(index(toState)) [label=\"\(label(event))\"]\n"
                 }
             }
         }

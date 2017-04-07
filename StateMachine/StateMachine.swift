@@ -28,7 +28,7 @@ public protocol StateMachineSchemaType {
     var initialState: State { get }
     var transitionLogic: (State, Event) -> (State, ((Subject) -> ())?)? { get }
 
-    init(initialState: State, transitionLogic: @escaping (State, Event) -> (State, ((Subject) -> ())?)?)
+    init(initialState: State, transitionLogic: @escaping (State, Event) -> (State, ((Subject) -> ())?)?) throws
 }
 
 
@@ -42,7 +42,7 @@ public struct StateMachineSchema<A, B, C>: StateMachineSchemaType {
     public let initialState: State
     public let transitionLogic: (State, Event) -> (State, ((Subject) -> ())?)?
 
-    public init(initialState: State, transitionLogic: @escaping (State, Event) -> (State, ((Subject) -> ())?)?) {
+    public init(initialState: State, transitionLogic: @escaping (State, Event) -> (State, ((Subject) -> ())?)?) throws {
         self.initialState = initialState
         self.transitionLogic = transitionLogic
     }
