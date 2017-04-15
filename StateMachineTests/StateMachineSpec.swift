@@ -52,6 +52,10 @@ private func createSimpleMachine(_ forward: (() -> ())? = nil, backward: (() -> 
     return StateMachine(schema: createSimpleSchema({ _ in forward?() }, backward: { _ in backward?() }), subject: ())
 }
 
+private func createMachineWithQueue(_ forward: (() -> ())? = nil, backward: (() -> ())? = nil, queue: DispatchQueue) -> StateMachine<StateMachineSchema<SimpleState, SimpleEvent, Void>> {
+    return StateMachine(schema: createSimpleSchema({ _ in forward?() }, backward: { _ in backward?() }), subject: (), queue: queue)
+}
+
 
 private class Subject {
     typealias SchemaType = StateMachineSchema<SimpleState, SimpleEvent, Subject>
@@ -67,6 +71,7 @@ private class Subject {
 }
 
 
+@available(iOS 10.0, *)
 class StateMachineSpec: QuickSpec {
     override func spec() {
         describe("State Machine") {
@@ -173,6 +178,48 @@ class StateMachineSpec: QuickSpec {
                 do { reference = MachineOwner() }
                 expect(reference).to(beNil())
             }
+
+            it("uses given dispatch queue in transitions") {
+                func currentQueueName() -> String {
+                    let name = __dispatch_queue_get_label(nil)
+                    return String(cString: name)
+                }
+                let queue = DispatchQueue(label: "myq")
+                let testQueueKey = DispatchSpecificKey<Void>()
+                queue.setSpecific(key: testQueueKey, value: ())
+                var queueCalled = ""
+                let expectation = XCTestExpectation()
+                let machine = createMachineWithQueue({
+                    dispatchPrecondition(condition: .onQueue(queue))
+                    expectation.fulfill()
+                    queueCalled = currentQueueName()
+                }, queue: queue)
+                machine.handleEvent(.e)
+                self.wait(for: [expectation], timeout: 1)
+                expect(queueCalled).to(equal("myq"))
+            }
+
+            it("uses given dispatch queue in transition callback") {
+                func currentQueueName() -> String {
+                    let name = __dispatch_queue_get_label(nil)
+                    return String(cString: name)
+                }
+                let queue = DispatchQueue(label: "myq")
+                let testQueueKey = DispatchSpecificKey<Void>()
+                queue.setSpecific(key: testQueueKey, value: ())
+                let machine = createMachineWithQueue(queue: queue)
+                var queueCalled = ""
+                let expectation = XCTestExpectation()
+                machine.didTransitionCallback = { _,_,_ in
+                    dispatchPrecondition(condition: .onQueue(queue))
+                    expectation.fulfill()
+                    queueCalled = currentQueueName()
+                }
+                machine.handleEvent(.e)
+                self.wait(for: [expectation], timeout: 1)
+                expect(queueCalled).to(equal("myq"))
+            }
+            
 
         }
 
