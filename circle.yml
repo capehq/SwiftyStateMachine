@@ -5,3 +5,5 @@ machine:
 dependencies:
   pre:
     - carthage bootstrap --use-ssh
+  cache_directories:
+    - Carthage
