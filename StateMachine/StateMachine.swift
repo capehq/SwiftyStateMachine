@@ -1,3 +1,4 @@
+import Foundation
 import Protector
 
 /// A type representing schema that can be reused by `StateMachine`
@@ -95,10 +96,15 @@ public final class StateMachine<Schema: StateMachineSchemaType> {
     /// transition blocks.  Closure used to allow for weak references.
     fileprivate let subject: () -> Schema.Subject?
 
-    fileprivate init(schema: Schema, subject: @escaping () -> Schema.Subject?) {
+    /// If given, the queue in which all events are handled.  
+    /// Otherwise they are handled in the thread in which handleEvent is called.
+    fileprivate let queue: DispatchQueue?
+
+    fileprivate init(schema: Schema, subject: @escaping () -> Schema.Subject?, queue: DispatchQueue? = nil) {
         self.protectedState = Protector(schema.initialState)
         self.schema = schema
         self.subject = subject
+        self.queue = queue
     }
     
     /// A method for triggering transitions and changing the state of the
@@ -107,22 +113,31 @@ public final class StateMachine<Schema: StateMachineSchemaType> {
     /// for current state and given event, the state is changed, the optional
     /// transition block is executed, and `didTransitionCallback` is called.
     public func handleEvent(_ event: Schema.Event) {
-        self.protectedState.withWriteLock { (protected: inout Schema.State) in
-            self.aboutToHandleEventCallback?(event)
-            
-            guard let
-                subject = self.subject(),
-                let (newState, transition) = self.schema.transitionLogic(self.state, event)
-                else {
-                    return
+        let `func` = {
+            self.protectedState.withWriteLock { (myState: inout Schema.State) in
+                self.aboutToHandleEventCallback?(event)
+
+                guard let
+                    subject = self.subject(),
+                    let (newState, transition) = self.schema.transitionLogic(self.state, event)
+                    else {
+                        return
+                }
+
+                let oldState = myState
+                myState = newState
+
+                transition?(subject)
+
+                self.didTransitionCallback?(oldState, event, newState)
             }
-            
-            let oldState = protected
-            protected = newState
-            
-            transition?(subject)
-            
-            self.didTransitionCallback?(oldState, event, newState)
+        }
+        if let queue = self.queue {
+            queue.async {
+                `func`()
+            }
+        } else {
+            `func`()
         }
     }
 }
@@ -133,13 +148,13 @@ public extension StateMachine where Schema.Subject: AnyObject {
     /// to remove subject-machine reference cycles, but it also means you have 
     /// to keep a strong reference to a subject somewhere else.  When subject 
     /// reference becomes `nil`, transitions are no longer performed.
-    public convenience init(schema: Schema, subject: Schema.Subject) {
-        self.init(schema: schema, subject: { [weak subject] in subject })
+    public convenience init(schema: Schema, subject: Schema.Subject, queue: DispatchQueue? = nil) {
+        self.init(schema: schema, subject: { [weak subject] in subject }, queue: queue)
     }
 }
 
 public extension StateMachine {
-    public convenience init(schema: Schema, subject: Schema.Subject) {
-        self.init(schema: schema, subject: { subject })
+    public convenience init(schema: Schema, subject: Schema.Subject, queue: DispatchQueue? = nil) {
+        self.init(schema: schema, subject: { subject }, queue: queue)
     }
 }
