@@ -84,10 +84,14 @@ public final class StateMachine<Schema: StateMachineSchemaType> {
     /// and the state after the transition.
     public var didTransitionCallback: ((Schema.State, Schema.Event, Schema.State) -> ())?
 
-    /// An optional block called before a transition with the event about 
+    /// An optional block called before a transition with the event about
     /// to be handled.
     public var aboutToHandleEventCallback: ((_ event: Schema.Event) -> ())?
-    
+
+    /// An optional block when transition logic in the schema returns nil.
+    /// This could be useful for debugging or printing unexpected non-transitions.
+    public var nilTransitionCallback: ((Schema.State, Schema.Event) -> ())?
+
     /// The schema of the state machine.  See `StateMachineSchemaType`
     /// documentation for more information.
     fileprivate let schema: Schema
@@ -117,10 +121,10 @@ public final class StateMachine<Schema: StateMachineSchemaType> {
             self.protectedState.withWriteLock { (myState: inout Schema.State) in
                 self.aboutToHandleEventCallback?(event)
 
-                guard let
-                    subject = self.subject(),
+                guard let subject = self.subject(),
                     let (newState, transition) = self.schema.transitionLogic(self.state, event)
                     else {
+                        self.nilTransitionCallback?(myState, event)
                         return
                 }
 

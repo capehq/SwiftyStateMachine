@@ -154,6 +154,25 @@ class StateMachineSpec: QuickSpec {
                 expect(callbackWasCalledCorrectly) == true
             }
 
+
+            it("will call nil transition callback") {
+                let trivialSchema = try! StateMachineSchema<SimpleState, SimpleEvent, Void>(initialState: .s1) { (state, event) in
+                    if state == .s1 { return (.s2, nil) }
+                    else { return nil }
+                }
+                let machine = StateMachine(schema: trivialSchema, subject: ())
+
+                var callbackWasCalledCorrectly = false
+                machine.nilTransitionCallback = { (state: SimpleState, event: SimpleEvent) in
+                    callbackWasCalledCorrectly = state == .s2 && event == .e
+                }
+
+                machine.handleEvent(.e)
+                expect(callbackWasCalledCorrectly) == false
+                machine.handleEvent(.e)
+                expect(callbackWasCalledCorrectly) == true
+            }
+
             it("can trigger transition from within transition") {
                 let subject = Subject(schema: createSimpleSchema({
                     $0.machine.handleEvent(.e)
