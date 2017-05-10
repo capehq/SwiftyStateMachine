@@ -162,3 +162,10 @@ public extension StateMachine {
         self.init(schema: schema, subject: { subject }, queue: queue)
     }
 }
+
+extension StateMachine: CustomDebugStringConvertible {
+    public /// A textual representation of this instance, suitable for debugging.
+    var debugDescription: String {
+        return "\(Schema.State.self)Machine"
+    }
+}
