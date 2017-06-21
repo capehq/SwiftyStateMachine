@@ -73,7 +73,8 @@ public struct GraphableStateMachineSchema<A: DOTLabelable, B: DOTLabelable, C>: 
     // > program.
     //
     //   [1]: https://developer.apple.com/library/mac/qa/qa1361/_index.html
-    #else
+    #elseif (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
+    /// ONLY if compiling for the simulator...
     /// Save the textual graph representation from the `DOTDigraph` property
     /// to a file, preferably in a project directory, for documentation
     /// purposes.  Works only when running in a simulator.
