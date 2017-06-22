@@ -1,2 +1,2 @@
-github "capehq/Protector" "master"
+github "capehq/Protector" ~> 0.1
 
