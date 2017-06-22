@@ -1,0 +1,3 @@
+[submodule "Carthage/Checkouts/Protector"]
+	path = Carthage/Checkouts/Protector
+	url = ssh://git@github.com/capehq/Protector.git
