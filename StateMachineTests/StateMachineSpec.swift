@@ -34,7 +34,7 @@ extension Operation: DOTLabelable {
 private enum SimpleState { case S1, S2 }
 private enum SimpleEvent { case E }
 
-private func createSimpleSchema<T>(forward forward: (T -> ())? = nil, backward: (T -> ())? = nil) -> StateMachineSchema<SimpleState, SimpleEvent, T> {
+private func createSimpleSchema<T>(forward: ((T) -> ())? = nil, backward: ((T) -> ())? = nil) -> StateMachineSchema<SimpleState, SimpleEvent, T> {
     return StateMachineSchema(initialState: .S1) { (state, event) in
         switch state {
             case .S1: switch event {
@@ -48,7 +48,7 @@ private func createSimpleSchema<T>(forward forward: (T -> ())? = nil, backward: 
     }
 }
 
-private func createSimpleMachine(forward forward: (() -> ())? = nil, backward: (() -> ())? = nil) -> StateMachine<StateMachineSchema<SimpleState, SimpleEvent, Void>> {
+private func createSimpleMachine(forward: (() -> ())? = nil, backward: (() -> ())? = nil) -> StateMachine<StateMachineSchema<SimpleState, SimpleEvent, Void>> {
     return StateMachine(schema: createSimpleSchema(forward: { _ in forward?() }, backward: { _ in backward?() }), subject: ())
 }
 
@@ -77,8 +77,8 @@ class StateMachineSpec: QuickSpec {
                 keeper = NumberKeeper(n: 1)
 
                 let schema: StateMachineSchema<Number, Operation, NumberKeeper> = StateMachineSchema(initialState: .One) { (state, event) in
-                    let decrement: NumberKeeper -> () = { _ in keeper.n -= 1 }
-                    let increment: NumberKeeper -> () = { _ in keeper.n += 1 }
+                    let decrement: (NumberKeeper) -> () = { _ in keeper.n -= 1 }
+                    let increment: (NumberKeeper) -> () = { _ in keeper.n += 1 }
 
                     switch state {
                         case .One: switch event {
@@ -164,7 +164,7 @@ class StateMachineSpec: QuickSpec {
 
                     init() {
                         machine = StateMachine(
-                            schema: StateMachineSchema(initialState: .S1) { _ in nil },
+                            schema: StateMachineSchema(initialState: .S1) { _,_  in nil },
                             subject: self)
                     }
                 }
@@ -203,7 +203,7 @@ class StateMachineSpec: QuickSpec {
 
             it("escapes double quotes in labels") {
 
-                let schema = GraphableStateMachineSchema<State, Event, Void>(initialState: .S) { _ in
+                let schema = GraphableStateMachineSchema<State, Event, Void>(initialState: .S) { _,_  in
                     (.S, nil)
                 }
 
