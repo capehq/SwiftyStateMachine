@@ -188,7 +188,7 @@ class StateMachineSpec: QuickSpec {
 
                     init() {
                         machine = StateMachine(
-                            schema: try! StateMachineSchema(initialState: .s1) { _ in nil },
+                            schema: try! StateMachineSchema(initialState: .s1) { _,_  in nil },
                             subject: self)
                     }
                 }
@@ -269,7 +269,7 @@ class StateMachineSpec: QuickSpec {
 
             it("escapes double quotes in labels") {
 
-                let schema = try! GraphableStateMachineSchema<State, Event, Void>(initialState: .s) { _ in
+                let schema = try! GraphableStateMachineSchema<State, Event, Void>(initialState: .s) { _,_  in
                     (.s, nil)
                 }
 

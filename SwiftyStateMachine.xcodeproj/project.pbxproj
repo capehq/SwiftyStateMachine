@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D2322C41E89C55800CDF4B2 /* Protector.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1D79F2B51E89C2BE00C6FEB0 /* Protector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */; };
 		1DA916771E98193A00B7E6BF /* MissingLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA916761E98193A00B7E6BF /* MissingLabels.swift */; };
 		1DD273DE1E89E24400D573B3 /* Protector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD273DD1E89E24400D573B3 /* Protector.framework */; };
-		1DD273E01E89E48C00D573B3 /* Protector.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DD273DD1E89E24400D573B3 /* Protector.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB2831871AC178D70010AD2A /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB4D56BB1AC17731006715E8 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB2831881AC178DB0010AD2A /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB4D56BC1AC17731006715E8 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB4D569F1AC169A3006715E8 /* StateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4D569E1AC169A3006715E8 /* StateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -58,7 +55,6 @@
 			files = (
 				CB2831881AC178DB0010AD2A /* Quick.framework in CopyFiles */,
 				CB2831871AC178D70010AD2A /* Nimble.framework in CopyFiles */,
-				1D2322C41E89C55800CDF4B2 /* Protector.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +64,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1DD273E01E89E48C00D573B3 /* Protector.framework in CopyFiles */,
 				CBE36D2C1AC44DCB00CFE10F /* Nimble.framework in CopyFiles */,
 				CBE36D2D1AC44DCB00CFE10F /* Quick.framework in CopyFiles */,
 			);
@@ -101,7 +96,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D79F2B51E89C2BE00C6FEB0 /* Protector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,16 +323,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Macoscope;
 				TargetAttributes = {
 					CB4D56981AC169A3006715E8 = {
 						CreatedOnToolsVersion = 6.3;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1020;
 					};
 					CB4D56A31AC169A3006715E8 = {
 						CreatedOnToolsVersion = 6.3;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1020;
 					};
 					CBE36D081AC44BA000CFE10F = {
 						CreatedOnToolsVersion = 6.3;
@@ -355,6 +349,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = CB4D568F1AC169A3006715E8;
@@ -457,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -517,6 +513,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -587,7 +584,7 @@
 				PRODUCT_NAME = SwiftyStateMachine;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -611,7 +608,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.capehq.swift.SwiftyStateMachine;
 				PRODUCT_NAME = SwiftyStateMachine;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -630,7 +627,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.macoscope.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SwiftyStateMachineTests;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -645,7 +642,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.macoscope.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SwiftyStateMachineTests;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
