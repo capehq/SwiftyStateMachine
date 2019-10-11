@@ -57,7 +57,11 @@ public struct GraphableStateMachineSchema<A: DOTLabelable, B: DOTLabelable, C>: 
     public init(initialState: State, transitionLogic: @escaping (State, Event) -> (State, ((Subject) -> ())?)?) throws {
         self.initialState = initialState
         self.transitionLogic = transitionLogic
-        self.DOTDigraph = try GraphableStateMachineSchema.DOTDigraphGivenInitialState(initialState, transitionLogic: transitionLogic)
+        #if os(OSX) || ((arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS)))
+            self.DOTDigraph = try GraphableStateMachineSchema.DOTDigraphGivenInitialState(initialState, transitionLogic: transitionLogic)
+        #else
+            self.DOTDigraph = ""
+        #endif
     }
 
     #if os(OSX)

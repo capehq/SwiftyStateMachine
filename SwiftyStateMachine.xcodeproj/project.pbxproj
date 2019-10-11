@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1DA916771E98193A00B7E6BF /* MissingLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA916761E98193A00B7E6BF /* MissingLabels.swift */; };
-		1DD273DE1E89E24400D573B3 /* Protector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD273DD1E89E24400D573B3 /* Protector.framework */; };
 		CB2831871AC178D70010AD2A /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB4D56BB1AC17731006715E8 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB2831881AC178DB0010AD2A /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CB4D56BC1AC17731006715E8 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB4D569F1AC169A3006715E8 /* StateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4D569E1AC169A3006715E8 /* StateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -72,9 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Protector.framework; sourceTree = "<group>"; };
 		1DA916761E98193A00B7E6BF /* MissingLabels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingLabels.swift; sourceTree = "<group>"; };
-		1DD273DD1E89E24400D573B3 /* Protector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Protector.framework; sourceTree = "<group>"; };
 		CB4D56991AC169A3006715E8 /* SwiftyStateMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyStateMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB4D569D1AC169A3006715E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB4D569E1AC169A3006715E8 /* StateMachine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateMachine.h; sourceTree = "<group>"; };
@@ -113,7 +110,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DD273DE1E89E24400D573B3 /* Protector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				CB4D56BB1AC17731006715E8 /* Nimble.framework */,
-				1D79F2B41E89C2BE00C6FEB0 /* Protector.framework */,
 				CB4D56BC1AC17731006715E8 /* Quick.framework */,
 			);
 			name = iOS;
@@ -213,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				CBE36D271AC44D9100CFE10F /* Nimble.framework */,
-				1DD273DD1E89E24400D573B3 /* Protector.framework */,
 				CBE36D281AC44D9100CFE10F /* Quick.framework */,
 			);
 			name = Mac;
@@ -667,7 +661,7 @@
 				INFOPLIST_FILE = StateMachine/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.capehq.swift.SwiftyStateMachine;
 				PRODUCT_NAME = SwiftyStateMachine;
 				SDKROOT = macosx;
@@ -692,7 +686,7 @@
 				INFOPLIST_FILE = StateMachine/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.capehq.swift.SwiftyStateMachine;
 				PRODUCT_NAME = SwiftyStateMachine;
 				SDKROOT = macosx;
@@ -717,7 +711,7 @@
 				);
 				INFOPLIST_FILE = StateMachineTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.macoscope.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SwiftyStateMachineTests;
 				SDKROOT = macosx;
@@ -736,7 +730,7 @@
 				);
 				INFOPLIST_FILE = StateMachineTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.macoscope.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SwiftyStateMachineTests;
 				SDKROOT = macosx;
